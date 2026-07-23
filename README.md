@@ -130,6 +130,21 @@ This launcher is currently coupled to one host:
 To run it elsewhere you'd generalise those paths (a config block) and supply
 equivalent suspend/resume scripts. PRs welcome.
 
+## Documentation
+
+- [`CLAUDE.md`](CLAUDE.md) — the operational contract: invariants, traps, and
+  policy decisions, each learned from a real failure. **Read this before
+  changing the lifecycle, suspend, or input code** (also loaded automatically
+  by AI coding agents like Claude Code).
+- [`install/SETUP.md`](install/SETUP.md) — operations manual: setup steps,
+  daily driving, controls, recovery.
+- [`docs/HOST.md`](docs/HOST.md) — the headless Sunshine host this was built
+  for and how its constraints (Xorg, NvFBC, 8 GB VRAM, resolution switching)
+  shaped the design.
+- [`docs/QUICK-RESUME-HISTORY.md`](docs/QUICK-RESUME-HISTORY.md) — the origin
+  story: the first, Sunshine-wired quick-resume implementation, why its UX
+  failed, and the requirements that produced this launcher.
+
 ## License
 
 MIT — see [LICENSE](LICENSE).
