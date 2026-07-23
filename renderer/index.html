@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; img-src 'self' file:; style-src 'self' 'unsafe-inline'; script-src 'self'" />
+  <title>Game Launcher</title>
+  <link rel="stylesheet" href="styles/base.css" />
+  <link rel="stylesheet" href="styles/library.css" />
+  <link rel="stylesheet" href="styles/overlay.css" />
+  <link rel="stylesheet" href="styles/debug.css" />
+</head>
+<body>
+  <!-- ambient cross-fading background -->
+  <div id="ambient">
+    <div class="ambient-layer" id="ambient-a"></div>
+    <div class="ambient-layer" id="ambient-b"></div>
+    <div class="ambient-scrim"></div>
+  </div>
+
+  <main>
+    <section id="screen-library" class="screen"></section>
+    <section id="screen-overlay" class="screen"></section>
+    <section id="screen-debug" class="screen"></section>
+  </main>
+
+  <div id="dialog-root"></div>
+  <div id="toast-root"></div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>

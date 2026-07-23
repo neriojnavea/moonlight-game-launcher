@@ -1,0 +1,127 @@
+/* ===== library screen: hero + card rail ===== */
+
+#screen-library { display: none; }
+#screen-library.active { display: block; }
+
+.lib-top {
+  position: absolute; top: 3.2vh; left: 3.4vw; right: 3.4vw;
+  display: flex; justify-content: space-between; align-items: center;
+  z-index: 4;
+}
+.lib-brand {
+  font-size: clamp(13px, 1.05vw, 20px);
+  font-weight: 700; letter-spacing: 0.35em; text-transform: uppercase;
+  color: var(--fg-dim);
+}
+.lib-status {
+  display: flex; gap: 1.6vw; align-items: center;
+  font-size: clamp(12px, 1vw, 19px); color: var(--fg-dim);
+}
+.lib-clock { font-variant-numeric: tabular-nums; font-weight: 600; color: var(--fg); }
+
+/* ---- hero ---- */
+.hero {
+  position: absolute; left: 3.4vw; top: 14vh; width: 52vw;
+  z-index: 3;
+}
+.hero-title {
+  font-size: clamp(30px, 3.6vw, 74px);
+  font-weight: 800; line-height: 1.06;
+  letter-spacing: -0.015em;
+  text-shadow: 0 4px 30px rgba(0,0,0,0.6);
+  opacity: 0; transform: translateY(12px);
+  transition: opacity 300ms ease, transform 380ms var(--ease-out);
+}
+.hero-meta {
+  margin-top: 1.8vh; display: flex; gap: 1.2vw; align-items: center;
+  font-size: clamp(13px, 1.15vw, 22px);
+  opacity: 0; transform: translateY(12px);
+  transition: opacity 300ms ease 60ms, transform 380ms var(--ease-out) 60ms;
+}
+.hero.shown .hero-title, .hero.shown .hero-meta { opacity: 1; transform: translateY(0); }
+.hero-sub { color: var(--fg-dim); }
+
+/* ---- rail ---- */
+.rail-viewport {
+  position: absolute; left: 0; right: 0; bottom: 9.5vh;
+  height: calc(var(--card-w) * 1.5 + 9vh);
+  overflow: visible;
+  z-index: 2;
+}
+.rail {
+  position: absolute; bottom: 4vh; left: 0;
+  display: flex; gap: var(--card-gap);
+  transition: transform 420ms var(--ease-out);
+  will-change: transform;
+}
+
+.card {
+  position: relative;
+  width: var(--card-w);
+  height: calc(var(--card-w) * 1.5);
+  flex: 0 0 auto;
+  border-radius: 14px;
+  overflow: visible;
+  transform: scale(1) translateY(0);
+  transition: transform 300ms var(--ease-spring);
+  opacity: 0;
+}
+.card.entered { opacity: 1; }
+@keyframes card-in {
+  from { opacity: 0; transform: translateY(6vh) scale(0.92); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+.card.entering { animation: card-in 480ms var(--ease-out) both; }
+
+.card-art {
+  width: 100%; height: 100%;
+  border-radius: 14px;
+  overflow: hidden;
+  background: linear-gradient(160deg, #1c2237 0%, #10131f 100%);
+  box-shadow: 0 10px 34px rgba(0,0,0,0.55);
+  border: 2px solid rgba(255,255,255,0.07);
+  transition: border-color 250ms ease, box-shadow 300ms ease;
+}
+.card-art img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.card-art .card-fallback {
+  width: 100%; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+  text-align: center; padding: 1em;
+  font-weight: 700; font-size: clamp(13px, 1.1vw, 22px);
+  color: var(--fg-dim);
+}
+
+.card.focused {
+  transform: scale(1.16) translateY(-2.2vh);
+  z-index: 3;
+}
+.card.focused .card-art {
+  border-color: var(--accent);
+  box-shadow:
+    0 0 0 2px var(--accent),
+    0 0 44px var(--accent-glow),
+    0 24px 60px rgba(0,0,0,0.65);
+}
+
+.card .badge {
+  position: absolute; top: 0.7em; right: 0.7em;
+  font-size: clamp(9px, 0.62vw, 13px);
+  z-index: 2;
+}
+
+/* progress shimmer while an op is in flight on this game */
+.card.busy .card-art::after {
+  content: "";
+  position: absolute; inset: 0;
+  background: linear-gradient(110deg, transparent 30%, rgba(79,195,247,0.18) 50%, transparent 70%);
+  background-size: 220% 100%;
+  animation: shimmer 1.3s linear infinite;
+}
+@keyframes shimmer { from { background-position: 200% 0; } to { background-position: -20% 0; } }
+
+.lib-empty {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; gap: 2vh;
+  align-items: center; justify-content: center;
+  color: var(--fg-dim); font-size: clamp(15px, 1.3vw, 26px);
+}

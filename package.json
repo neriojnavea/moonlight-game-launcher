@@ -1,0 +1,16 @@
+{
+  "name": "moonlight-game-launcher",
+  "version": "0.1.0",
+  "description": "Controller-driven fullscreen game launcher with quick resume for the Sunshine streaming host",
+  "main": "main/index.js",
+  "private": true,
+  "scripts": {
+    "start": "electron .",
+    "test": "node --test test/unit/"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^43.2.0",
+    "ws": "^8.21.1"
+  }
+}

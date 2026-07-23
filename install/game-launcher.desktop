@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Game Launcher
+Comment=Controller-driven fullscreen game launcher with quick resume
+# 10s delay: starts after Sunshine's 6s-delayed autostart so the stream host
+# is up first. launcher.sh sets DISPLAY/XAUTHORITY/local PULSE itself.
+Exec=sh -c "sleep 10; exec /home/nerio/moonlight/launcher/bin/launcher.sh"
+Terminal=false
+X-GNOME-Autostart-enabled=true

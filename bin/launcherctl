@@ -1,0 +1,48 @@
+#!/usr/bin/env node
+'use strict';
+// CLI client for the launcher control socket. Drives the SAME code path as
+// the UI (single-driver invariant). Used by test-launcher-quick-resume.sh.
+//
+// Usage: launcherctl <cmd> [appid]
+//   ping | status | frozen | resume-all | resync | show | hide | quit
+//   launch <appid> | play <appid> | suspend [appid] | resume [appid]
+//   close <appid> | force-kill <appid> | clear-stale <key>
+const net = require('net');
+
+const SOCK = '/run/user/1000/launcher.sock';
+const [, , cmd, appid] = process.argv;
+
+if (!cmd) {
+  console.error('usage: launcherctl <cmd> [appid]');
+  process.exit(2);
+}
+
+const req = { cmd };
+if (appid) req.appid = appid;
+
+const conn = net.createConnection(SOCK, () => {
+  conn.write(JSON.stringify(req) + '\n');
+});
+
+let buf = '';
+conn.on('data', (chunk) => {
+  buf += chunk.toString();
+  const nl = buf.indexOf('\n');
+  if (nl < 0) return;
+  const res = JSON.parse(buf.slice(0, nl));
+  console.log(JSON.stringify(res, null, 2));
+  conn.end();
+  process.exit(res.ok ? 0 : 1);
+});
+
+conn.on('error', (e) => {
+  console.error(`launcherctl: cannot reach ${SOCK}: ${e.message}`);
+  console.error('is the launcher running? start it with ~/moonlight/launcher/bin/launcher.sh');
+  process.exit(3);
+});
+
+// Ops like launch can legitimately take minutes; only guard against a hang.
+setTimeout(() => {
+  console.error('launcherctl: timed out after 300s');
+  process.exit(4);
+}, 300000);

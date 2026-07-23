@@ -1,0 +1,18 @@
+{
+  "guideButton": { "enabled": true, "action": "overlay", "debounceMs": 400 },
+  "overlay": { "autoSuspendAfterSec": 0 },
+  "glyphs": "auto",
+  "animations": { "enabled": true, "ambientBackground": true },
+  "autoSuspendOnSwitch": true,
+  "singleGameMode": true,
+  "poll": { "visibleMs": 2000, "hiddenMs": 5000 },
+  "timeouts": {
+    "launchProcSec": 120,
+    "launchWindowSec": 90,
+    "windowReturnSec": 10,
+    "suspendVerifySec": 5,
+    "closeGraceSec": 5,
+    "termGraceSec": 4
+  },
+  "debug": { "verbose": false }
+}
